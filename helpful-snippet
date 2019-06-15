@@ -1,0 +1,14 @@
+# append scheduled task
+$action = New-ScheduledTaskAction -Execute 'Powershell.exe' -Argument 'E:\demo\VideoPS.ps1'
+$trigger =  New-ScheduledTaskTrigger -Daily -At 10am
+Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "VideoPS Demo" -Description "Shane was here"
+
+# initial drivers
+https://www.amd.com/ko/support/apu/amd-ryzen-processors/amd-ryzen-5-desktop-processors-radeon-vega-graphics/amd-ryzen-5-0
+https://www.msi.com/Motherboard/support/X470-GAMING-PLUS#down-bios
+
+# windows defender up
+Set-MpPreference -DisableRealtimeMonitoring $false
+
+# etc
+https://yvez.be/2018/09/30/3-easy-ways-to-manage-windows-applications-through-command-line/
