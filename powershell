@@ -1,0 +1,48 @@
+# windows update
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+Install-Module PSWindowsUpdate -Force
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Force
+Get-Command –module PSWindowsUpdate
+Add-WUServiceManager -ServiceID 7971f918-a847-4430-9279-4a52d1efe18d -Confirm:$False
+Get-WUInstall –MicrosoftUpdate –AcceptAll #–AutoReboot
+# - restart needed?
+
+# window optional feature: hyper-v, subsystem, sandbox
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+Enable-WindowsOptionalFeature -Online -FeatureName "Containers-DisposableClientVM" -All
+
+# subsystem: ubuntu
+Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu-1604 -OutFile ~\Ubuntu.appx -UseBasicParsing
+Add-AppxPackage -Path ~\Ubuntu.appx
+rm ~\Ubuntu.appx
+# - restart needed?
+
+# keyboard delay, 세벌식
+Set-ItemProperty -Path "HKCU:\Control Panel\Keyboard" -Name "KeyboardDelay" -Value 0
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\IME\15.0\IMEKR" -Name "InputMethod" -Value 1
+
+# reboot?
+$objSystemInfo = New-Object -ComObject "Microsoft.Update.SystemInfo"
+If($objSystemInfo.RebootRequired)
+{
+    Restart-Computer -Force
+}
+
+
+# chocolatey
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+## browser & system tools
+choco install brave -fy
+choco install vscode -fy
+choco install windirstat -fy
+choco install autoruns -fy
+choco install advanced-ip-scanner -fy
+
+## docker
+choco install docker-cli
+choco install docker-machine
+choco install docker-compose
+choco install docker-desktop
+choco install docker-kitematic
