@@ -19,3 +19,17 @@ netsh int ip reset
 ipconfig /release
 ipconfig /renew
 ipconfig /flushdns
+
+# additional install
+choco install slack -fy
+choco install jetbrainstoolbox -fy
+choco install keypirinha - fy
+choco install autohotkey.install -fy
+choco install git.install -fy
+# session path variable update after install git
+$env:Path = (Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Session Manager\Environment' -Name Path).Path
+git config --global core.autocrlf false
+git config --global core.eol lf
+
+# Get-ItemProperty의 PATH 형태
+(Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name Path).Path
