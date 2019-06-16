@@ -12,3 +12,10 @@ Set-MpPreference -DisableRealtimeMonitoring $false
 
 # etc
 https://yvez.be/2018/09/30/3-easy-ways-to-manage-windows-applications-through-command-line/
+
+# issue: Network numbers at connection increase infinite on USB thethering
+netsh winsock reset
+netsh int ip reset
+ipconfig /release
+ipconfig /renew
+ipconfig /flushdns
