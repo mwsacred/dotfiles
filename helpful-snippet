@@ -33,3 +33,11 @@ git config --global core.eol lf
 
 # Get-ItemProperty의 PATH 형태
 (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name Path).Path
+
+# reboot required check
+$objSystemInfo = New-Object -ComObject "Microsoft.Update.SystemInfo"
+If($objSystemInfo.RebootRequired)
+{
+    Restart-Computer -Force
+}
+
