@@ -1,0 +1,6 @@
+{
+    "files.eol": "\n",
+    "git.alwaysShowStagedChangesResourceGroup": true,
+    "git.enableSmartCommit": true,
+    "git.autoStash": true
+}
