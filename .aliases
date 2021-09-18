@@ -1,0 +1,2 @@
+alias exp='function exp { /mnt/c/Windows/explorer.exe ${1:-.}; }; exp;'
+# End

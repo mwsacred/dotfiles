@@ -1,4 +1,8 @@
 # windows update
+IF(!(Test-Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate))
+{
+    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" -Force | Out-Null
+}
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 Install-Module PSWindowsUpdate -Force
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Force
@@ -13,10 +17,14 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-L
 Enable-WindowsOptionalFeature -Online -FeatureName "Containers-DisposableClientVM" -All
 
 # subsystem: ubuntu
-Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu-1604 -OutFile ~\Ubuntu.appx -UseBasicParsing
+# https://docs.microsoft.com/ko-kr/windows/wsl/install-manual
+# Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu-1604 -OutFile ~\Ubuntu.appx -UseBasicParsing
+wsl --set-default-version 2
+# TODO: Download & Install https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi 
+Invoke-WebRequest -Uri https://aka.ms/wslubuntu2004 -OutFile ~\Ubuntu.appx -UseBasicParsing
 Add-AppxPackage -Path ~\Ubuntu.appx
 rm ~\Ubuntu.appx
-# - restart needed?
+# restart needed?
 
 # keyboard delay, 세벌식
 Set-ItemProperty -Path "HKCU:\Control Panel\Keyboard" -Name "KeyboardDelay" -Value 0
