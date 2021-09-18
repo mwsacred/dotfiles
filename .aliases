@@ -1,2 +1,3 @@
 alias exp='function exp { /mnt/c/Windows/explorer.exe ${1:-.}; }; exp;'
+alias git="/mnt/c/Program\ Files/Git/cmd/git.exe"
 # End
